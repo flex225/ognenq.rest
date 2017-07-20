@@ -228,17 +228,4 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-
-        'api' => [
-            'driver' => 'passport',
-            'provider' => 'users',
-        ],
-    ],
-
 ];
