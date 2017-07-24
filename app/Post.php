@@ -7,14 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
   public function type() {
-       return $this->hasOne("App\Type");
+       return $this->hasOne("App\Type", "id");
   }
 
   public function tags() {
-       return $this->hasMany("App\Tag");
+       return $this->belongsToMany("App\Tag");
+  }
+
+  public function images() {
+       return $this->HasMany("App\Image");
   }
 
   public function user() {
-       return $this->hasOne("App\User");
+       return $this->belongsToOne("App\User");
   }
 }

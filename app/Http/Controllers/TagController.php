@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
-use App\Image;
-use App\Http\Controllers\Auth;
+use App\Tag;
 
-class PostController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::all();
+        return Tag::getAllTags();
     }
 
     /**
@@ -27,15 +25,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-      $post = new Post();
-      $post->user_id = 1;
-      $post->type_id = 1;
-      $post->save();
-      $post->tags()->sync([1,2,3]);//TODO remove hardcode
-      // print_r(Image::createImages(1, ["art", "din", "art2"]));
-      Image::createImages($post->id, ["art", "din", "art2"]);
+      $tag = new Tag();
+      $tag->name = $request->name;
+      if ($request->parent_id) {
+        $tag->parent_id = $request->parent_id;
+      }
+      $tag->save();
 
-      return $post;
+      return $tag;
     }
 
     /**
@@ -46,9 +43,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id)->with('tags')->with('type')->get();
-        // dd($post);
-        return $post;
+         return Tag::find($id);
     }
 
     /**
@@ -60,12 +55,12 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $post = Post::find($id);
-      $post->type_id = 4  ;
-      $post->save();
-      $post->tags()->sync([1,2,3]);//TODO remove hardcode
+        $tag = Tag::find($id);
+        $tag->name = $request->new_name;
+        $tag->parent_id = $request->new_parent;
+        $tag->save();
 
-      return $post;
+        return $tag;
     }
 
     /**
@@ -76,9 +71,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
-        $post->tags()->detach();
-        $post->delete();
+        $tag = Tag::find($id);
+        $tag->posts()->detach();
+        $tag->delete();
 
         //TODO return
     }

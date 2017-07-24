@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Type extends Model
 {
-  public function post() {
-       return $this->belongs('App\Post');
+  public function posts() {
+       return $this->hasMany('App\Post');
   }
 }

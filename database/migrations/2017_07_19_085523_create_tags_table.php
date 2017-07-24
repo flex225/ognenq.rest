@@ -22,7 +22,7 @@ class CreateTagsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('tags', function($table) {          
+        Schema::table('tags', function(Blueprint $table) {          
             $table->foreign('parent_id')
                 ->references('id')
                 ->on('tags')
