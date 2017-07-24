@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('posts', function($table) {
+        Schema::table('posts', function(Blueprint $table) {
           $table->foreign('user_id')
               ->references('id')
               ->on('users')

@@ -24,5 +24,21 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('/test', function (Request $request) {
       return "art";
   });
-  Route::resource('posts', 'PostController');
+});
+
+//TODO move to auth Route group
+Route::resource('post', 'PostController', [
+  'except' => ['create', 'edit']
+]);
+Route::resource('type', 'TypeController', [
+  'except' => ['create', 'edit']
+]);
+Route::resource('tag', 'TagController', [
+  'except' => ['create', 'edit']
+]);
+Route::post('image/delete', function (Request $request) {
+  if (!is_array($request)) {
+    return "please give array of ids";
+  }
+  return App\Image::whereIn('id', $request)->delete();
 });

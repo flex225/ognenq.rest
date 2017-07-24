@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
-use App\Image;
-use App\Http\Controllers\Auth;
+use App\Type;
 
-class PostController extends Controller
+class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::all();
+        return Tag::all();
     }
 
     /**
@@ -27,15 +25,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-      $post = new Post();
-      $post->user_id = 1;
-      $post->type_id = 1;
-      $post->save();
-      $post->tags()->sync([1,2,3]);//TODO remove hardcode
-      // print_r(Image::createImages(1, ["art", "din", "art2"]));
-      Image::createImages($post->id, ["art", "din", "art2"]);
+      $type = new Type();
+      $type->name = $request->name;
+      $type->save();
 
-      return $post;
+      return $type;
     }
 
     /**
@@ -46,9 +40,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id)->with('tags')->with('type')->get();
-        // dd($post);
-        return $post;
+         return Type::find($id)->posts();
     }
 
     /**
@@ -60,12 +52,11 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $post = Post::find($id);
-      $post->type_id = 4  ;
-      $post->save();
-      $post->tags()->sync([1,2,3]);//TODO remove hardcode
+        $type = Type::find($id);
+        $type->name = $request->name;
+        $type->save();
 
-      return $post;
+        return $type;
     }
 
     /**
@@ -76,10 +67,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
-        $post->tags()->detach();
-        $post->delete();
+      $type = Type::find($id);
+      $type->delete();
 
-        //TODO return
+      //TODO return
     }
 }
