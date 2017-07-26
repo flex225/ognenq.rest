@@ -92,7 +92,7 @@ class PostController extends Controller
     }
 
     /**
-    * Filter posts by their tags and postType
+    * Filter posts by given tags and postType
     */
     public function filterPosts(Request $request) {
       $postType = $request->type;
