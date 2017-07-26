@@ -30,6 +30,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 Route::resource('post', 'PostController', [
   'except' => ['create', 'edit']
 ]);
+Route::post('post/filter', 'PostController@filterPosts');
+
 Route::resource('type', 'TypeController', [
   'except' => ['create', 'edit']
 ]);

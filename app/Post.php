@@ -15,7 +15,7 @@ class Post extends Model
   }
 
   public function images() {
-       return $this->HasMany("App\Image");
+       return $this->hasMany("App\Image");
   }
 
   public function user() {
