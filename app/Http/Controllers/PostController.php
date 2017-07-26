@@ -91,6 +91,9 @@ class PostController extends Controller
         //TODO return
     }
 
+    /**
+    * Filter posts by their tags and postType
+    */
     public function filterPosts(Request $request) {
       $postType = $request->type;
       $tags = $request->tags;
